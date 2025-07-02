@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
+import model.Task;
+
+
 
 public class DBHandler {
 
@@ -26,15 +30,16 @@ public class DBHandler {
         """;
 
         String createTasksTable = """
-            CREATE TABLE IF NOT EXISTS tasks (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                description TEXT,
-                assigned_to INTEGER,
-                due_date TEXT,
-                status TEXT,
-                FOREIGN KEY (assigned_to) REFERENCES users(id)
-            );
+                CREATE TABLE IF NOT EXISTS tasks (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      title TEXT NOT NULL,
+                      description TEXT,
+                      assigned_to INTEGER,
+                      due_date TEXT,
+                      status TEXT,
+                      completed INTEGER DEFAULT 0,
+                      FOREIGN KEY (assigned_to) REFERENCES users(id)
+                  );
         """;
 
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
@@ -43,6 +48,22 @@ public class DBHandler {
             System.out.println("✅ Database initialized successfully.");
         } catch (SQLException e) {
             System.out.println("❌ Error initializing database: " + e.getMessage());
+        }
+    }
+
+    public static void addTask(Task task) {
+        String sql = "INSERT INTO tasks(title, description, due_date, completed) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, task.getTitle());
+            stmt.setString(2, task.getDescription());
+            stmt.setString(3, task.getDueDate());
+            stmt.setInt(4, task.isCompleted() ? 1 : 0);
+            stmt.executeUpdate();
+            System.out.println("✅ Task saved!");
+        } catch (SQLException e) {
+            System.out.println("❌ Failed to save task: " + e.getMessage());
         }
     }
 }
