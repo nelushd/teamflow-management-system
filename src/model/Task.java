@@ -1,60 +1,29 @@
 package model;
 
-
-
 public class Task {
     private int id;
     private String title;
     private String description;
-    private String dueDate;
-    private boolean completed;
+    private String status; // e.g., "Not Started", "In Progress", "Completed"
+    private int assignedUserId;
 
-    public Task(String title, String description, String dueDate, boolean completed) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.completed = completed;
-    }
-
-    // Optional: add an overloaded constructor with `id` if needed for updates
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setId(int id) {
+    public Task(int id, String title, String description, String status, int assignedUserId) {
         this.id = id;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
+        this.status = status;
+        this.assignedUserId = assignedUserId;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
-    }
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public String getStatus() { return status; }
+    public int getAssignedUserId() { return assignedUserId; }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
+    public void setId(int id) { this.id = id; }
+    public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setStatus(String status) { this.status = status; }
+    public void setAssignedUserId(int assignedUserId) { this.assignedUserId = assignedUserId; }
 }

@@ -1,28 +1,18 @@
-import db.DBHandler;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import db.DBHandler;
+import view.LoginView;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) {
-        // Initialize DB
         DBHandler.initDatabase();
-
-        // Temporary UI (just a label)
-        Label label = new Label("Welcome to TeamFlow!");
-        StackPane root = new StackPane(label);
-        Scene scene = new Scene(root, 400, 300);
-
-        primaryStage.setTitle("TeamFlow");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        LoginView loginView = new LoginView();
+        loginView.show(primaryStage);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+
